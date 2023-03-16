@@ -10,6 +10,7 @@ import {
   Query,
   Req,
   Res,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -17,11 +18,13 @@ import { Request, Response } from 'express';
 import { CreateUserDto } from '../../dtos/CreateUser.dto';
 import { UsersService } from '../../services/users/users.service';
 import { ValidateCreateUserPipe } from '../../pipes/validate-create-user/validate-create-user.pipe';
+import { AuthGuard } from '../../guards/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
   @Get()
+  @UseGuards(AuthGuard)
   getUsers() {
     return this.userService.fetchUsers();
   }
